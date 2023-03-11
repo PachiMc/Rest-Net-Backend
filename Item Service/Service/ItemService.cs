@@ -6,6 +6,7 @@ using Item_Service.Response;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Mysqlx.Crud;
+using Org.BouncyCastle.Asn1.X509;
 using System.Net.WebSockets;
 using System.Reflection.Metadata;
 
@@ -97,9 +98,12 @@ namespace Item_Service.Service
         public ServiceResponse<ItemDTO> UpdateItem(ItemDTO itemDTO)
         {
             ServiceResponse<ItemDTO> serviceResponse = new();
-            Item item = new Item(itemDTO.Id, itemDTO.Name, itemDTO.Stock, itemDTO.Price, itemDTO.Description);
-            _context.Update(item);
-            if (true)
+            //  Item item = new Item(itemDTO.Id, itemDTO.Name, itemDTO.Stock, itemDTO.Price, itemDTO.Description);
+            int rowsAffected = _context.Item.Where(elem => elem.Id == itemDTO.Id).ExecuteUpdate(
+                update => update.SetProperty(item => item.Name, itemDTO.Name).SetProperty(item => item.Description, itemDTO.Description).SetProperty(item => item.Stock, itemDTO.Stock).SetProperty(item => item.Price, itemDTO.Price)
+                );
+            _context.SaveChanges(); 
+            if (rowsAffected > 0)
             {
                 serviceResponse.Data = itemDTO;
             }

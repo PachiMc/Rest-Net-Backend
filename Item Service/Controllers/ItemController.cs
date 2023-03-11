@@ -1,17 +1,15 @@
-﻿using Azure;
-using Item_Service.DTO;
-using Item_Service.Model;
+﻿using Item_Service.DTO;
 using Item_Service.Response;
 using Item_Service.Service;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+
 namespace Item_Service.Controllers
 
 {
     [ApiController]
-
+    [ApiVersion("1.0")]
     [Route("api/[controller]/[action]")]
+    
     public class ItemController : ControllerBase
     {
 
@@ -23,7 +21,7 @@ namespace Item_Service.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ItemDTO> GetAll()
+        public ActionResult<ItemDTO> Get()
         {
             ServiceResponse<List<ItemDTO>> response = _itemService.GetAll();
             response.Succcess = false;
@@ -36,9 +34,9 @@ namespace Item_Service.Controllers
             return Ok(response);
         }
 
-        [Route("/GetById/{id}")]
-        [HttpGet]
-        public ActionResult<List<ItemDTO>> GetSingle(int id)
+
+        [HttpGet("{id}")]
+        public ActionResult<List<ItemDTO>> Get(int id)
         {
             ServiceResponse<ItemDTO> response = _itemService.GetById(id);
             response.Succcess = false;
@@ -51,11 +49,11 @@ namespace Item_Service.Controllers
             return Ok(response);
         }
 
-        [Route("/GetBySearch")]
-        [HttpGet]
-        public ActionResult<List<ItemDTO>> SearchItem(string match)
+  
+        [HttpGet("")]
+        public ActionResult<List<ItemDTO>> SearchItem(string query)
         {
-            ServiceResponse<List<ItemDTO>> response = _itemService.SearchItem(match);
+            ServiceResponse<List<ItemDTO>> response = _itemService.SearchItem(query);
             response.Succcess = false;
             response.Message = "The item list is empty";
             if (response.Data is not null)
@@ -67,7 +65,7 @@ namespace Item_Service.Controllers
         }
 
 
-        [Route("/New")]
+
         [HttpPost]
         public ActionResult<List<ItemDTO>> AddItem(ItemAddDTO itemDTO)
         {
@@ -81,8 +79,8 @@ namespace Item_Service.Controllers
             }
             return Ok(response);
         }
-        [Route("/Delete/{id}")]
-        [HttpDelete]
+
+        [HttpDelete("{id}")]
         public ActionResult<List<ItemDTO>> DeleteItem(int id)
         {
             ServiceResponse<ItemDTO> response = _itemService.DeleteItem(id);
@@ -95,9 +93,9 @@ namespace Item_Service.Controllers
             }
             return Ok(response);
         }
-        [Route("/Update")]
+    
         [HttpPut]
-        public ActionResult<ItemDTO> DeleteItem(ItemDTO itemDTO)
+        public ActionResult<ItemDTO> UpdateItem(ItemDTO itemDTO)
         {
             ServiceResponse<ItemDTO> response = _itemService.UpdateItem(itemDTO);
             response.Succcess = false;
