@@ -1,8 +1,6 @@
-﻿using Item_Service.DTO;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Runtime.Intrinsics.X86;
-using System.Runtime.CompilerServices;
+
 
 namespace Item_Service.Model
 {
