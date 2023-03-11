@@ -98,7 +98,6 @@ namespace Item_Service.Service
         public ServiceResponse<ItemDTO> UpdateItem(ItemDTO itemDTO)
         {
             ServiceResponse<ItemDTO> serviceResponse = new();
-            //  Item item = new Item(itemDTO.Id, itemDTO.Name, itemDTO.Stock, itemDTO.Price, itemDTO.Description);
             int rowsAffected = _context.Item.Where(elem => elem.Id == itemDTO.Id).ExecuteUpdate(
                 update => update.SetProperty(item => item.Name, itemDTO.Name).SetProperty(item => item.Description, itemDTO.Description).SetProperty(item => item.Stock, itemDTO.Stock).SetProperty(item => item.Price, itemDTO.Price)
                 );
