@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using Item_Service.Data;
-using Item_Service.DTO;
-using Item_Service.Model;
-using Item_Service.Response;
+using API.Data;
+using API.DTO;
+using API.Model;
+using API.Response;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace Item_Service.Service
+namespace API.Service
 {
     public class ItemService : IItemService
     {
@@ -20,7 +20,7 @@ namespace Item_Service.Service
         public ServiceResponse<ItemAddDTO> AddItem(ItemAddDTO itemDTO)
         {
             ServiceResponse<ItemAddDTO> serviceResponse = new();
-            Item item = new Item(itemDTO.Name, itemDTO.Stock, itemDTO.Price, itemDTO.Description);
+            Item item = new (itemDTO.Name, itemDTO.Stock, itemDTO.Price, itemDTO.Description);
             _context.Add(item);
             if (_context.SaveChanges() > 0)
             {
@@ -35,7 +35,7 @@ namespace Item_Service.Service
             Item? item = _context.Find<Item>(id);
             if (item is not null)
             {
-                ItemDTO itemDTO = new ItemDTO(item.Id, item.Name, item.Stock, item.Price, item.Description);
+                ItemDTO itemDTO = new (item.Id, item.Name, item.Stock, item.Price, item.Description);
                 _context.Remove(item);
                 if (_context.SaveChanges() > 0)
                 {
@@ -51,7 +51,7 @@ namespace Item_Service.Service
             List<Item> item = _context.Item.ToList();
             if (item is not null)
             {
-                List<ItemDTO> ItemDTOList = new List<ItemDTO>();
+                List<ItemDTO> ItemDTOList =new();
                 for (int i = 0; i < item.Count; i++)
                 {
                     ItemDTOList.Add(new ItemDTO(item[i].Id, item[i].Name, item[i].Stock, item[i].Price, item[i].Description));
@@ -67,20 +67,20 @@ namespace Item_Service.Service
             Item? item = _context.Find<Item>(id);
             if (item is not null)
             {
-                ItemDTO itemDTO = new ItemDTO(item.Id, item.Name, item.Stock, item.Price, item.Description);
+                ItemDTO itemDTO = new (item.Id, item.Name, item.Stock, item.Price, item.Description);
                 serviceResponse.Data = itemDTO;
             }
             return serviceResponse;
         }
 
-        public ServiceResponse<List<ItemDTO>> SearchItem(string match)
+        public ServiceResponse<List<ItemDTO>> SearchItem(string query)
         {
             ServiceResponse<List<ItemDTO>> serviceResponse = new();
             List<Item> item = _context.Item.ToList();
             if (item is not null)
             {
                 List<ItemDTO> ItemDTOList = new();
-                Predicate<Item> predicate = elem => elem.Name.Contains(match) || elem.Name.StartsWith(match) || elem.Name.EndsWith(match) || elem.Description.Contains(match) || elem.Description.StartsWith(match) || elem.Description.EndsWith(match);
+                Predicate<Item> predicate = elem => elem.Name.Contains(query) || elem.Name.StartsWith(query) || elem.Name.EndsWith(query) || elem.Description.Contains(query) || elem.Description.StartsWith(query) || elem.Description.EndsWith(query);
                 item = item.FindAll(predicate);
                 for (int i = 0; i < item.Count; i++)
                 {
@@ -106,3 +106,4 @@ namespace Item_Service.Service
         }
     }
 }
+    

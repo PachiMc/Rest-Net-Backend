@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Item_Service.DTO
+namespace API.DTO
 {
     public class ItemDTO
     {

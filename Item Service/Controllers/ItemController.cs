@@ -1,9 +1,10 @@
-﻿using Item_Service.DTO;
-using Item_Service.Response;
-using Item_Service.Service;
+﻿using API.DTO;
+using API.Response;
+using API.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Item_Service.Controllers
+namespace API.Controllers
 
 {
     [ApiController]
@@ -19,7 +20,7 @@ namespace Item_Service.Controllers
         {
             _itemService = itemService;
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult<ItemDTO> Get()
         {
@@ -29,12 +30,11 @@ namespace Item_Service.Controllers
             if (response.Data is not null)
             {
                 response.Success = true;
-                response.Message = "";
             }
             return Ok(response);
         }
 
-
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public ActionResult<List<ItemDTO>> Get(int id)
         {
@@ -44,12 +44,11 @@ namespace Item_Service.Controllers
             if (response.Data is not null)
             {
                 response.Success = true;
-                response.Message = "";
             }
             return Ok(response);
         }
 
-  
+        [AllowAnonymous]
         [HttpGet("")]
         public ActionResult<List<ItemDTO>> SearchItem(string query)
         {
@@ -59,7 +58,6 @@ namespace Item_Service.Controllers
             if (response.Data is not null)
             {
                 response.Success = true;
-                response.Message = "";
             }
             return Ok(response);
         }

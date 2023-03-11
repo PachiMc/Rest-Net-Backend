@@ -1,7 +1,7 @@
-﻿using Item_Service.DTO;
-using Item_Service.Response;
+﻿using API.DTO;
+using API.Response;
 
-namespace Item_Service.Service
+namespace API.Service
 {
     public interface IItemService
     {
@@ -10,6 +10,6 @@ namespace Item_Service.Service
         public ServiceResponse<ItemDTO> UpdateItem(ItemDTO item);
         public ServiceResponse<ItemDTO> DeleteItem(int id);
         public ServiceResponse<ItemAddDTO> AddItem(ItemAddDTO itemDTO);
-        public ServiceResponse<List<ItemDTO>> SearchItem(string match);
+        public ServiceResponse<List<ItemDTO>> SearchItem(string query);
     }
 }

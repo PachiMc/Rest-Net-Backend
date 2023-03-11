@@ -1,4 +1,4 @@
-﻿namespace Item_Service.Response
+﻿namespace API.Response
 {
     public class ServiceResponse<T>
     {

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 
-namespace Item_Service.Model
+namespace API.Model
 {
     public class Item
     {
