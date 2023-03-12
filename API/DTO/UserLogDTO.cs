@@ -1,4 +1,4 @@
-﻿namespace Item_Service.DTO
+﻿namespace API.DTO
 {
     public class UserLogDTO
     {

@@ -2,7 +2,6 @@
 using API.DTO;
 using API.Model;
 using API.Response;
-using Item_Service.DTO;
 using API.Controllers;
 
 namespace API.Service

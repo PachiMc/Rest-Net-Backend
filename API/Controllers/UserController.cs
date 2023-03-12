@@ -1,7 +1,6 @@
 ﻿using API.DTO;
 using API.Response;
 using API.Service;
-using Item_Service.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
