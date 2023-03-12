@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace API.DTO
+﻿namespace API.DTO
 {
     public class ItemDTO
     {
@@ -12,12 +10,10 @@ namespace API.DTO
             Price = price;
             Description = description;
         }
-
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public int Price { get; set; }
         public int Stock { get; set; }
         public string Description { get; set; } = string.Empty;
-
     }
 }

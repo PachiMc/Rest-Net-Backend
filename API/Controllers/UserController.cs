@@ -8,24 +8,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/[controller]/[action]")]
     public class UserController : ControllerBase
     {
-
         private readonly IUserService _userService;
-
         public UserController(IUserService userService)
         {
             _userService = userService;
         }
-        [AllowAnonymous]
+
         [HttpPost]
-        public ActionResult<UserDTO> SignUp(UserDTO userDTO)
+        public ActionResult<ServiceResponse<string>> SignUp(UserDTO userDTO)
         {
-            ServiceResponse<UserDTO> response = _userService.AddUser(userDTO);
+            ServiceResponse<string> response = _userService.AddUser(userDTO);
             response.Success = false;
             response.Message = "Error creating a new user";
             if (response.Data is not null)
@@ -35,15 +32,14 @@ namespace API.Controllers
             }
             return Ok(response);
         }
-        [AllowAnonymous]
+
         [HttpPost]
-        public ActionResult<UserLogDTO> LogIn(UserLogDTO userDTO)
+        public ActionResult<ServiceResponse<string>> LogIn(UserLogDTO userDTO)
         {
-            ServiceResponse<UserLogDTO> response = _userService.LogUser(userDTO);
+            ServiceResponse<string> response = _userService.LogUser(userDTO);
             response.Success = false;
             response.Message = "Failed to login";
-            if (response.Data is not null)
-            {
+            if (response.Data is not null) {
                 response.Success = true;
                 response.Message = "Login success";
             }

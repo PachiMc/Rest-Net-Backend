@@ -10,7 +10,6 @@ namespace API.Model
         public bool Admin { get; set; }
         public User(string name, string password, bool admin)
         {
-            // this.Id = itemDTO.Id;
             Name = name;
             Password = password;
             Admin = admin;

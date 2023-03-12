@@ -1,10 +1,8 @@
-﻿using AutoMapper;
-using API.Data;
+﻿using API.Data;
 using API.DTO;
 using API.Model;
 using API.Response;
 using Microsoft.EntityFrameworkCore;
-
 
 namespace API.Service
 {
@@ -12,7 +10,6 @@ namespace API.Service
     {
 
         private readonly DataContext _context;
-
         public ItemService(DataContext context)
         {
             _context = context;
@@ -20,7 +17,7 @@ namespace API.Service
         public ServiceResponse<ItemAddDTO> AddItem(ItemAddDTO itemDTO)
         {
             ServiceResponse<ItemAddDTO> serviceResponse = new();
-            Item item = new (itemDTO.Name, itemDTO.Stock, itemDTO.Price, itemDTO.Description);
+            Item item = new(itemDTO.Name, itemDTO.Stock, itemDTO.Price, itemDTO.Description);
             _context.Add(item);
             if (_context.SaveChanges() > 0)
             {
@@ -35,7 +32,7 @@ namespace API.Service
             Item? item = _context.Find<Item>(id);
             if (item is not null)
             {
-                ItemDTO itemDTO = new (item.Id, item.Name, item.Stock, item.Price, item.Description);
+                ItemDTO itemDTO = new(item.Id, item.Name, item.Stock, item.Price, item.Description);
                 _context.Remove(item);
                 if (_context.SaveChanges() > 0)
                 {
@@ -51,7 +48,7 @@ namespace API.Service
             List<Item> item = _context.Item.ToList();
             if (item is not null)
             {
-                List<ItemDTO> ItemDTOList =new();
+                List<ItemDTO> ItemDTOList = new();
                 for (int i = 0; i < item.Count; i++)
                 {
                     ItemDTOList.Add(new ItemDTO(item[i].Id, item[i].Name, item[i].Stock, item[i].Price, item[i].Description));
@@ -67,7 +64,7 @@ namespace API.Service
             Item? item = _context.Find<Item>(id);
             if (item is not null)
             {
-                ItemDTO itemDTO = new (item.Id, item.Name, item.Stock, item.Price, item.Description);
+                ItemDTO itemDTO = new(item.Id, item.Name, item.Stock, item.Price, item.Description);
                 serviceResponse.Data = itemDTO;
             }
             return serviceResponse;
@@ -97,7 +94,7 @@ namespace API.Service
             int rowsAffected = _context.Item.Where(elem => elem.Id == itemDTO.Id).ExecuteUpdate(
                 update => update.SetProperty(item => item.Name, itemDTO.Name).SetProperty(item => item.Description, itemDTO.Description).SetProperty(item => item.Stock, itemDTO.Stock).SetProperty(item => item.Price, itemDTO.Price)
                 );
-            _context.SaveChanges(); 
+            _context.SaveChanges();
             if (rowsAffected > 0)
             {
                 serviceResponse.Data = itemDTO;
@@ -106,4 +103,3 @@ namespace API.Service
         }
     }
 }
-    

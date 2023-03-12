@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace API.DTO
+﻿namespace API.DTO
 {
     public class ItemAddDTO
     {
-
         public string Name { get; set; } = string.Empty;
         public int Price { get; set; }
         public int Stock { get; set; }

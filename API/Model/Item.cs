@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-
 namespace API.Model
 {
     public class Item
     {
-    
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -16,7 +14,6 @@ namespace API.Model
         public string Description { get; set; }
         public Item(string name, int stock, int price, string description)
         {
-            // this.Id = itemDTO.Id;
             Name = name;
             Stock = stock;
             Price = price;
@@ -24,7 +21,6 @@ namespace API.Model
         }
         public Item(int id, string name, int stock, int price, string description)
         {
-            // this.Id = itemDTO.Id;
             Id = id;
             Name = name;
             Stock = stock;

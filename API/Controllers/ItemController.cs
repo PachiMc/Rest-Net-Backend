@@ -5,21 +5,20 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
-
 {
+    [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/[controller]/[action]")]
-    
+
     public class ItemController : ControllerBase
     {
-
         private readonly IItemService _itemService;
-
         public ItemController(IItemService itemService)
         {
             _itemService = itemService;
         }
+
         [AllowAnonymous]
         [HttpGet]
         public ActionResult<ItemDTO> Get()
@@ -34,22 +33,24 @@ namespace API.Controllers
             return Ok(response);
         }
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet("{id}")]
         public ActionResult<List<ItemDTO>> Get(int id)
         {
+            //int userID = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value);
             ServiceResponse<ItemDTO> response = _itemService.GetById(id);
             response.Success = false;
             response.Message = "The item " + id + " could not be found";
             if (response.Data is not null)
             {
                 response.Success = true;
+                response.Message = "";
             }
             return Ok(response);
         }
 
         [AllowAnonymous]
-        [HttpGet("")]
+        [HttpGet]
         public ActionResult<List<ItemDTO>> SearchItem(string query)
         {
             ServiceResponse<List<ItemDTO>> response = _itemService.SearchItem(query);
@@ -58,12 +59,12 @@ namespace API.Controllers
             if (response.Data is not null)
             {
                 response.Success = true;
+                response.Message = "";
             }
             return Ok(response);
         }
 
-
-
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public ActionResult<List<ItemDTO>> AddItem(ItemAddDTO itemDTO)
         {
@@ -78,6 +79,7 @@ namespace API.Controllers
             return Ok(response);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public ActionResult<List<ItemDTO>> DeleteItem(int id)
         {
@@ -91,8 +93,10 @@ namespace API.Controllers
             }
             return Ok(response);
         }
-    
+
+        [Authorize(Roles = "admin")]
         [HttpPut]
+
         public ActionResult<ItemDTO> UpdateItem(ItemDTO itemDTO)
         {
             ServiceResponse<ItemDTO> response = _itemService.UpdateItem(itemDTO);
