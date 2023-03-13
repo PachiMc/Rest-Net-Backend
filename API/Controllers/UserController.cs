@@ -51,7 +51,7 @@ namespace API.Controllers
             ServiceResponse<string> response = new() { Success = true, Message = "Logout sucess" };
             Response.Cookies.Delete("jwt", new CookieOptions
             {
-                HttpOnly = true,
+                HttpOnly = false,
                 SameSite = SameSiteMode.None,
                 Secure = true
             });
