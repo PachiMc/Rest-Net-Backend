@@ -10,7 +10,6 @@ namespace API.Controllers
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/[controller]/[action]")]
-
     public class ItemController : ControllerBase
     {
         private readonly IItemService _itemService;
@@ -33,7 +32,7 @@ namespace API.Controllers
             return Ok(response);
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public ActionResult<List<ItemDTO>> Get(int id)
         {

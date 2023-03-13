@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace API.Model
 {
@@ -7,7 +8,8 @@ namespace API.Model
         [Key]
         public string Name { get; set; }
         public string Password { get; set; }
-        public bool Admin { get; set; }
+        [DefaultValue(false)]
+        public bool Admin { get; set; } = false;
         public User(string name, string password, bool admin)
         {
             Name = name;
